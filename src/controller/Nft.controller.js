@@ -7,7 +7,7 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const NFT_METADATA_DIR = path.join(__dirname, "../public/metadata");
+const NFT_METADATA_DIR = path.join(__dirname, "../../public/metadata");
 const BUYED_SONGS_FILE = path.join(NFT_METADATA_DIR, "buyedsongs.json");
 
 // Ensure directory exists
@@ -42,7 +42,6 @@ const writeBuyedSongs = async (data) => {
 const storeMetadata = AsyncHandler(async (req, res) => {
   try {
     await ensureDir();
-
     const { userAddress, encryptedCid, metadata } = req.body;
 
     if (!userAddress) {
@@ -72,10 +71,12 @@ const storeMetadata = AsyncHandler(async (req, res) => {
       image,
       encryptedMusicCid,
       createdAt,
+      nftTokenId,
     } = metadata;
 
     const nftMetadata = {
       name: title || "Untitled Track",
+      nfttokenId: nftTokenId,
       description: description || "",
       image: image || "",
       animation_url: encryptedMusicCid || "",
